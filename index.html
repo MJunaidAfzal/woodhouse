@@ -478,6 +478,76 @@ h2,h3{font-family:var(--serif); font-weight:400; line-height:1.14; letter-spacin
 .room-txt p{font-size:14.5px; line-height:1.55; color:rgba(247,241,236,.78)}
 
 /* ============================================================
+   SIGNATURE TREATMENTS — photo-led cards, one per headline service.
+   Same motion language as .room (image scales, card lifts), but each
+   card carries its own price so it reads on its own away from the menu.
+   Photos live in assets/products/ and are cropped to one shared aspect
+   ratio, so the grid stays on a line whatever the source dimensions.
+   ============================================================ */
+.band-feature{
+  background:
+    radial-gradient(118% 68% at 50% -12%, rgba(227,200,106,.085), transparent 62%),
+    linear-gradient(180deg,#1A0E14 0%,#160C12 56%,#1A0E14 100%);
+  border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+}
+.prod-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(14px,1.8vw,22px)}
+.prod{position:relative; display:flex; flex-direction:column; overflow:hidden; isolation:isolate;
+  border:1px solid var(--line); background:rgba(247,241,236,.045);
+  transition:background-color .22s ease, border-color .22s ease,
+             transform .35s cubic-bezier(.22,1,.36,1)}
+.prod:hover{background:rgba(247,241,236,.075); border-color:rgba(227,200,106,.42);
+  transform:translateY(-4px)}
+.prod-img{position:relative; aspect-ratio:4/3; overflow:hidden; background:var(--night-2)}
+.prod-img img{width:100%; height:100%; object-fit:cover; display:block;
+  transition:transform .6s cubic-bezier(.22,1,.36,1)}
+.prod:hover .prod-img img{transform:scale(1.06)}
+.prod-img::after{content:""; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(180deg, rgba(10,6,9,.38) 0%, rgba(10,6,9,0) 42%,
+                                     rgba(10,6,9,.52) 100%)}
+.prod-tag{position:absolute; z-index:2; top:14px; left:14px;
+  padding:6px 12px; font-size:11.5px; font-weight:600; letter-spacing:.12em;
+  text-transform:uppercase; color:#2A1F04;
+  background:linear-gradient(180deg,#F6E6AE,#E3C86A)}
+.prod-save{position:absolute; z-index:2; top:14px; right:14px;
+  padding:6px 12px; border-radius:999px; font-size:11.5px; font-weight:700;
+  letter-spacing:.05em; color:#fff; background:rgba(10,6,9,.7);
+  border:1px solid rgba(227,200,106,.5);
+  -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px)}
+.prod-txt{display:flex; flex-direction:column; flex:1; padding:clamp(18px,2.1vw,25px)}
+.prod-txt h3{font-size:clamp(19px,2.1vw,23px); color:#fff; margin-bottom:7px}
+.prod-note{font-size:14px; line-height:1.55; color:var(--ink-soft)}
+.prod-foot{display:flex; align-items:flex-end; justify-content:space-between;
+  gap:14px; margin-top:auto; padding-top:clamp(16px,2vw,20px)}
+.prod-price{display:flex; align-items:baseline; gap:9px; flex-wrap:wrap}
+.prod-price .now{font-size:clamp(21px,2.3vw,25px); font-weight:700; color:var(--gold);
+  letter-spacing:-.01em; font-variant-numeric:tabular-nums}
+.prod-price .was{font-size:14.5px; color:rgba(247,241,236,.42);
+  text-decoration:line-through; font-variant-numeric:tabular-nums}
+.prod-book{display:inline-flex; align-items:center; gap:7px; flex:none;
+  height:40px; padding:0 17px; border-radius:999px; text-decoration:none;
+  font-size:14px; font-weight:700; color:var(--btn-ink);
+  background:linear-gradient(180deg,#FFFFFF 0%,#F6E6AE 12%,#E3C86A 78%,#F4E3A6 100%);
+  transition:transform .18s ease, box-shadow .18s ease}
+.prod-book:hover{transform:translateY(-2px); box-shadow:0 10px 24px rgba(227,200,106,.32)}
+.prod-book:focus-visible{outline:2px solid var(--gold); outline-offset:3px}
+.prod-book svg{width:12px; height:12px; flex:none}
+.prod-foot-note{margin-top:clamp(22px,3vw,32px); font-size:14.5px; color:var(--ink-soft);
+  padding:16px 20px; background:rgba(227,200,106,.07);
+  border:1px solid rgba(227,200,106,.2)}
+
+@media (max-width:980px){ .prod-grid{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:620px){
+  .prod-grid{grid-template-columns:1fr}
+  .prod-img{aspect-ratio:16/10}
+}
+@media (max-width:380px){
+  .prod-foot{flex-direction:column; align-items:flex-start; gap:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  .prod,.prod-img img,.prod-book{transition:none}
+}
+
+/* ============================================================
    GALLERY — column masonry, no cropping, any number of photos
    ============================================================ */
 .mosaic{columns:3; column-gap:clamp(12px,1.4vw,18px)}
@@ -959,6 +1029,174 @@ form.bk[data-done="true"] .bk-done{display:block}
         <span>Pedicure</span><span>Henna</span><span>Haircut</span><span>Hair colour</span>
         <span>Eyelash extensions</span>
       </div>
+    </div>
+  </section>
+
+  <!-- ===================== SIGNATURE TREATMENTS =====================
+       The headline services, each with its own photograph and price.
+       Photos: assets/products/1–6.png.
+       CONFIRM with the owner: the was/now prices below are the promotional
+       pair shown on the booking listing — check they are still running. -->
+  <section class="band band-feature" id="products">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="kicker">Signature treatments</p>
+        <h2>The six people come in for</h2>
+        <p>Nails on one side, advanced skin work in the private room on the other.
+           Every price below is the price at the till &mdash; and where something is
+           down from its usual rate, you can see exactly what it was.</p>
+      </div>
+
+      <div class="prod-grid">
+
+        <article class="prod">
+          <div class="prod-img">
+            <img src="assets/products/1.png" width="768" height="771" loading="lazy"
+                 alt="A set of square acrylic extensions in pink shimmer with white French tips">
+            <span class="prod-tag">Nails</span>
+          </div>
+          <div class="prod-txt">
+            <h3>Acrylic Extensions</h3>
+            <p class="prod-note">A full set, shaped to length and finished in the colour
+               or French tip of your choice.</p>
+            <div class="prod-foot">
+              <p class="prod-price"><span class="now">&pound;40.00</span></p>
+              <a class="prod-book" href="#book">Book
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 12h14M13 6l6 6-6 6"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="prod">
+          <div class="prod-img">
+            <img src="assets/products/2.png" width="763" height="518" loading="lazy"
+                 alt="A microneedling roller being worked across a client's cheek during a facial">
+            <span class="prod-tag">Skin</span>
+            <span class="prod-save">Save &pound;5</span>
+          </div>
+          <div class="prod-txt">
+            <h3>Microneedling &mdash; Face</h3>
+            <p class="prod-note">Collagen induction for texture, fine lines and scarring.
+               Cleanse, treatment and a calming serum to finish.</p>
+            <div class="prod-foot">
+              <p class="prod-price">
+                <span class="now">&pound;55.00</span><span class="was">&pound;60.00</span>
+              </p>
+              <a class="prod-book" href="#book">Book
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 12h14M13 6l6 6-6 6"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="prod">
+          <div class="prod-img">
+            <img src="assets/products/3.png" width="767" height="507" loading="lazy"
+                 alt="A dermaplaning blade being drawn along a client's jawline in gloved hands">
+            <span class="prod-tag">Skin</span>
+          </div>
+          <div class="prod-txt">
+            <h3>Dermaplaning</h3>
+            <p class="prod-note">Dead skin and fine hair taken off with a sterile blade.
+               Makeup sits flat afterwards and serums go in properly.</p>
+            <div class="prod-foot">
+              <p class="prod-price"><span class="now">&pound;55.00</span></p>
+              <a class="prod-book" href="#book">Book
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 12h14M13 6l6 6-6 6"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="prod">
+          <div class="prod-img">
+            <img src="assets/products/4.png" width="771" height="767" loading="lazy"
+                 alt="A before and after of a client's stomach following body microneedling">
+            <span class="prod-tag">Skin</span>
+            <span class="prod-save">Save &pound;5</span>
+          </div>
+          <div class="prod-txt">
+            <h3>Microneedling &mdash; Body</h3>
+            <p class="prod-note">The same treatment over a larger area &mdash; stomach,
+               thighs or arms &mdash; for stretch marks and loose texture.</p>
+            <div class="prod-foot">
+              <p class="prod-price">
+                <span class="now">&pound;80.00</span><span class="was">&pound;85.00</span>
+              </p>
+              <a class="prod-book" href="#book">Book
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 12h14M13 6l6 6-6 6"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="prod">
+          <div class="prod-img">
+            <img src="assets/products/5.png" width="615" height="780" loading="lazy"
+                 alt="Almond polygel extensions in nude with bronze swirls, gems and a gold star">
+            <span class="prod-tag">Nails</span>
+          </div>
+          <div class="prod-txt">
+            <h3>Polygel Nail Extensions</h3>
+            <p class="prod-note">Lighter and more flexible than acrylic. Any length or
+               shape, with art added on the day if you want it.</p>
+            <div class="prod-foot">
+              <p class="prod-price"><span class="now">&pound;45.00</span></p>
+              <a class="prod-book" href="#book">Book
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 12h14M13 6l6 6-6 6"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="prod">
+          <div class="prod-img">
+            <img src="assets/products/6.png" width="613" height="766" loading="lazy"
+                 alt="A bottle of Didier Lab BBIO builder gel held beside a natural nail with glitter art">
+            <span class="prod-tag">Nails</span>
+            <span class="prod-save">Save &pound;5</span>
+          </div>
+          <div class="prod-txt">
+            <h3>BIAB on Natural Nails</h3>
+            <p class="prod-note">Builder gel laid over your own nails to strengthen them
+               as they grow. Extra for nail art or a repair.</p>
+            <div class="prod-foot">
+              <p class="prod-price">
+                <span class="now">&pound;30.00</span><span class="was">&pound;35.00</span>
+              </p>
+              <a class="prod-book" href="#book">Book
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 12h14M13 6l6 6-6 6"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <p class="prod-foot-note">
+        <strong style="color:#fff">Not sure which one?</strong> Ring us on the number at the
+        bottom of the page and we&rsquo;ll talk it through &mdash; there&rsquo;s no charge for
+        a consultation before you book.
+      </p>
     </div>
   </section>
 
@@ -1656,6 +1894,8 @@ form.bk[data-done="true"] .bk-done{display:block}
       ['#menu .card',              'settle', 80],
       ['.menu-note',               'rise',   0],
       ['.chips span',              'settle', 34],
+      ['#products .prod',          'settle', 80],
+      ['.prod-foot-note',          'rise',   0],
       ['.rooms .room',             'settle', 100],
       ['.mosaic .tile',            'settle', 70],
       ['#reviews .marquee',        'fade',   0],
